@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Usuarios</title>
+    <!-- Agrega la referencia a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">San Francisco Soche</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:vista_restringida_Administrador' %}">Inicio</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'task:user_table' %}">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:view_fontanero' %}">Fontaneros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:jornales_view' %}">Jornales</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:view_predios' %}">Predios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:sector_view' %}">Sectores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:logout' %}">Salir</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <a href="{% url 'task:register' %}" class="btn btn-primary">Crear Usuario</a>
+    <a href="{% url 'task:view_pagos' %}" class="btn btn-primary">Pagos Multas Realizadas</a>
+    <a href="{% url 'task:view_pagos_agua' %}" class="btn btn-primary">Pagos Agua Realizadas</a>
+    <a href="{% url 'task:excel_report' %}" class="btn btn-primary">Descargar Excel</a>
+    <a href="https://sandbox.paypal.com" class="btn btn-primary">Visualizar Pagos Paypal</a>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Lista de Usuarios</h2>
+            </div>
+            <div class="col-md-6">
+                <form class="form-inline float-right" method="POST" action="{% url 'task:search_usuario' %}">
+                    {% csrf_token %}
+                    <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="Buscar" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre y Apellido</th>
+                    <th>Servicio</th>
+                    <th>Teléfono</th>
+                    <th>Dirección o Sector</th>
+                    <th>Titular</th>
+                    <th>DPI</th>
+                    <th>Saldo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.nombres_apellidos }}</td>
+                    <td>{{ user.servicio }}</td>
+                    <td>{{ user.telefono }}</td>
+                    <td>{{ user.sector_ubicacion.nombre }}</td>
+                    <td>{{ user.titular }}</td>
+                    <td>{{ user.dpi }}</td>
+                    <td>{{ user.saldo }}</td>
+                    <td><a type="button" href="{% url 'task:modify_user_view' idusuario=user.id %}" class="btn btn-primary">Modificar</a></td>
+                    <td><a type="button" href="{% url 'task:delete_user' idusuario=user.id %}" class="btn btn-danger">Eliminar</a></td>
+                    <td><a type="button" href="{% url 'task:view_user' idusuario=user.id %}" class="btn btn-info">Ver</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Agrega la referencia a Bootstrap JS y jQuery (necesario para el funcionamiento de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

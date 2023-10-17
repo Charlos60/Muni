@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modificar Usuario</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">San Francisco Soche</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:vista_restringida_Administrador' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:user_table' %}">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:view_fontanero' %}">Fontaneros</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'task:jornales_view' %}">Jornales</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:sector_view' %}">Sectores</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:view_predios' %}">Predios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:logout' %}">Salir</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h2>Registro de Jornal</h2>
+        <form method="POST" action="{% url 'task:editar_jornal' idjornal=jornal.id %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="idJornal">Id del Jornal:</label>
+                <input type="text" id="idJornal" name="idJornal" class="form-control" value="{{jornal.idJornal}}"required>
+            </div>
+            <div class="form-group">
+                <label for="nombres_apellidos">Nombres y apellidos:</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" value="{{jornal.nombre}}" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" class="form-control" value="{{jornal.telefono}}" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripcion:</label>
+                <input type="text" id="descripcion" name="descripcion" class="form-control" value="{{jornal.descripcion}}" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Sector:</label>
+                <select id="sector" name="sector" class="form-control select2" data-url="{% url 'task:search_sector' %}" value="{{jornal.sector.nombre}}" required>
+                </select>                
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        jQuery(document).ready(function() {
+            jQuery(".select2").select2({
+                placeholder: "Selecciona un sector",
+                minimumInputLength: 2,
+                ajax: {
+                    url: function (params) {
+                        return jQuery(this).data('url') + '?search=' + params.term;
+                    },
+                    dataType: 'json',
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

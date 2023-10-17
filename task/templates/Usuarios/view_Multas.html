@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multas de Usuario</title>
+    <!-- Agrega la referencia a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">San Francisco Soche</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:vista_restringida_Administrador' %}">Inicio</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'task:user_table' %}">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:view_fontanero' %}">Fontaneros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:jornales_view' %}">Jornales</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:view_predios' %}">Predios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:logout' %}">Salir</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+<a href="{% url 'task:Create_view_multa' idusuario=usuario.id %}" class="btn btn-primary mt-3">Crear multa</a>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Lista de Multas</h1>
+        <div class="row mt-4">
+            {% for multa in multa %}
+            {% if not multa.pago_realizado %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Descripción de la Multa</h5>
+                        <p class="card-text">{{ multa.descripcion }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Saldo: Q{{ multa.saldo }}</li>
+                        <li class="list-group-item">Fecha de Creación: {{ multa.fecha_creacion }}</li>
+                        <li class="list-group-item">Fecha de Vencimiento: {{ multa.fecha_vencimiento }}</li>
+                        <li class="list-group-item">Usuario: {{ multa.usuario.nombres_apellidos }}</li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <form action="{% url 'task:delete_multa' idmulta=multa.idmultas %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                        <form action="{% url 'task:pago_realizado' idmulta=multa.idmultas %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Pagar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container">
+        <h1 class="mt-5">Lista de Pagos de Agua Pendientes</h1>
+        <div class="row mt-4">
+            {% for agua in agua %}
+            {% if not agua.pago_realizado %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pago de agua pendiente</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Saldo: Q{{ agua.saldo }}</li>
+                        <li class="list-group-item">Mes: {{agua.mes}}</li>
+                        <li class="list-group-item">Usuario: {{ agua.usuario.nombres_apellidos }}</li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <form action="#" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'task:pago_realizado_agua_true' idpagoagua=agua.idpagoagua %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">Pagar</button>
+                    </form>
+                </div>
+            </div>
+            {% endif %} 
+            {% endfor %}
+        </div>
+        <a href="{% url 'task:user_table' %}" class="btn btn-primary mt-3">Volver</a>
+    </div>
+
+    <!-- Agrega la referencia a Bootstrap JS y jQuery (necesario para el funcionamiento de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modificar Fontanero</title>
+    <!-- Agrega la referencia a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">San Francisco Soche</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'task:vista_restringida_Administrador' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:user_table' %}">Usuarios</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'task:view_fontanero' %}">Fontaneros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:jornales_view' %}">Jornales</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:view_predios' %}">Predios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:logout' %}">Salir</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h2>Modificar Usuario</h2>
+        <form method="POST" action="{% url 'task:modify_fontanero' idfontanero=fontanero.idfontanero %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="nombres_apellidos">Nombres y apellidos:</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ fontanero.nombre }}" required>
+            </div>
+            <div class="form-group">
+                <label for="disponibilidad">Disponibilidad:</label>
+                <select id="estado" name="estado" class="form-control">
+                    <option value="disponible" {% if fontanero.estado == 'disponible' %}selected{% endif %}>Disponible</option>
+                    <option value="no_disponible" {% if fontanero.estado == 'no_disponible' %}selected{% endif %}>No Disponible</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" class="form-control" value="{{ fontanero.telefono }}" required>
+            </div>
+            <div class="form-group">
+                <label for="tipo_pago">Tipo de Pago:</label>
+                <select id="tipo_pago" name="tipo_pago" class="form-control">
+                    <option value="semanal" {% if fontanero.tipo_pago == 'semanal' %}selected{% endif %}>Semanal</option>
+                    <option value="mensual" {% if fontanero.tipo_pago == 'mensual' %}selected{% endif %}>Mensual</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dpi">DPI:</label>
+                <input type="text" id="dpi" name="dpi" class="form-control" value="{{ fontanero.dpi }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+    </div>
+
+    <!-- Agrega la referencia a Bootstrap JS y jQuery (necesario para el funcionamiento de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

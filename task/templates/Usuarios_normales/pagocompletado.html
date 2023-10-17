@@ -1,0 +1,30 @@
+<p>La siguiente información de pago se ha recibido:</p>
+
+<ul>
+    <li><strong>ID de pago:</strong> <span id="id_pago"></span></li>
+    <li><strong>Intención:</strong> <span id="intencion_pago"></span></li>
+    <li><strong>Estado:</strong> <span id="estado_pago"></span></li>
+    <li><strong>Fecha de creación:</strong> <span id="fecha_creacion"></span></li>
+    <li><strong>Fecha de actualización:</strong> <span id="fecha_actualizacion"></span></li>
+    <li><strong>Comprador:</strong> <span id="comprador"></span></li>
+    <li><strong>Monto total:</strong> <span id="monto_total"></span></li>
+</ul>
+
+<script>
+    // Recupera los datos del pago desde el servidor (JSON)
+    fetch("{% url 'task:pago_completado_view' %}")
+        .then(response => response.json())
+        .then(data => {
+            // Actualiza el contenido de la página con los datos del pago
+            document.getElementById('id_pago').textContent = data.data.id;
+            document.getElementById('intencion_pago').textContent = data.data.intent;
+            document.getElementById('estado_pago').textContent = data.data.status;
+            document.getElementById('fecha_creacion').textContent = data.data.create_time;
+            document.getElementById('fecha_actualizacion').textContent = data.data.update_time;
+            document.getElementById('comprador').textContent = data.data.payer.email_address;
+            document.getElementById('monto_total').textContent = data.data.purchase_units[0].amount.currency_code + " " + data.data.purchase_units[0].amount.value;
+        })
+        .catch(error => {
+            console.error("Error al recuperar los datos del pago: " + error);
+        });
+</script>

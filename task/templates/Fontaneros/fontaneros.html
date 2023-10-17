@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Usuarios</title>
+    <!-- Agrega la referencia a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">San Francisco Soche</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:vista_restringida_Administrador' %}">Inicio</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:user_table' %}">Usuarios</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'task:view_fontanero' %}">Fontaneros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:jornales_view' %}">Jornales</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:view_predios' %}">Predios</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:sector_view' %}">Sectores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:logout' %}">Salir</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <a href="{% url 'task:register_view_fontanero' %}" class="btn btn-primary">Crear Fontanero</a>
+    <a href="{% url 'task:excel_report_fontanero' %}" class="btn btn-primary">Descargar Excel</a>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Lista de Fontaneros</h2>
+            </div>
+        <div class="col-md-6">
+            <form class="form-inline float-right" method="POST" action="{% url 'task:search_fontanero' %}">
+                {% csrf_token %}
+                <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="Buscar" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre y Apellido</th>
+                    <th>Estado</th>
+                    <th>Teléfono</th>
+                    <th>Tipo de Pago</th>
+                    <th>DPI</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fontaneros in fontaneros %}
+                <tr>
+                    <td>{{ fontaneros.nombre }}</td>
+                    <td>{{ fontaneros.estado }}</td>
+                    <td>{{ fontaneros.telefono }}</td>
+                    <td>{{ fontaneros.tipo_pago }}</td>
+                    <td>{{ fontaneros.dpi }}</td>
+                    <td><a type="button" href="{% url 'task:modify_fontanero_view' idfontanero=fontaneros.idfontanero %}" class="btn btn-primary">Modificar</a></td>
+                    <td><a type="button" href="{% url 'task:delete_fontanero' idfontanero=fontaneros.idfontanero %}" class="btn btn-danger">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Agrega la referencia a Bootstrap JS y jQuery (necesario para el funcionamiento de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

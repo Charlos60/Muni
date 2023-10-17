@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio</title>
+    <!-- Agrega los enlaces a los archivos CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">San Francisco Soche</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'task:vista_restringida' %}">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'task:pendientes_usuario' %}">Pendientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="{% url 'task:pendientes_multas' %}">Pendientes Multas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'task:contactanos_view' %}">Contacto</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'task:logout' %}">Salir</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="mt-5">Información de Contacto</h1>
+            <p>¡Estamos encantados de poder ayudarte! Aquí tienes nuestra información de contacto:</p>
+            
+            <ul class="list-unstyled">
+                <li><strong>Dirección:</strong> Calle Principal, Ciudad, País</li>
+                <li><strong>Teléfono:</strong> (123) 456-7890</li>
+                <li><strong>Correo Electrónico:</strong> contacto@example.com</li>
+            </ul>
+            
+            <p>No dudes en ponerte en contacto con nosotros si tienes alguna pregunta o comentario. Estamos aquí para ayudarte.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Agrega la referencia a Bootstrap JS y jQuery (necesario para el funcionamiento de Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio</title>
+    <!-- Agrega los enlaces a los archivos CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">San Francisco Soche</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'task:vista_restringida' %}">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'task:pendientes_usuario' %}">Pendientes Agua</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="{% url 'task:pendientes_multas' %}">Pendientes Multas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'task:contactanos_view' %}">Contacto</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'task:logout' %}">Salir</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+{% for anuncio in anuncios %}
+<div class="container mt-4 border-bottom pb-4">
+    <h6>{{ anuncio.fecha_creacion }}</h6>
+    <h1>{{ anuncio.titulo }}</h1>
+    <p>{{ anuncio.contenido }}</p>
+</div>
+{% endfor %}
+
+<!-- Agrega el enlace al archivo JavaScript de Bootstrap (opcional) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

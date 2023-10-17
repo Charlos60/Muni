@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>San Francisco Soche</title>
+    <!-- Agrega la referencia a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Agrega la referencia a CKEditor -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/51.2.0/classic/ckeditor.js"></script>
+
+    <!-- Agrega la referencia a tu archivo cheditor.js -->
+    <script src="{% static 'js/cheditor.js' %}"></script>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">San Francisco Soche</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:vista_restringida_Administrador' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:user_table' %}">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:view_fontanero' %}">Fontaneros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:jornales_view' %}">Jornales</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'task:view_predios' %}">Predios</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'task:sector_view' %}">Sectores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task:logout' %}">Salir</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h2>Crear un Nuevo Sector</h2>
+        <form action="{% url 'task:create_sector' %}" method="POST">
+            {% csrf_token %}
+
+            <!-- Campo para el Nombre del Sector -->
+            <div class="form-group">
+                <label for="nombre">Nombre del Sector:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+
+            <!-- Campo para la Descripción del Sector -->
+            <div class="form-group">
+                <label for="descripcion">Descripción del Sector:</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
+            </div>
+
+            <!-- Botón para Enviar el Formulario -->
+            <button type="submit" class="btn btn-primary">Guardar Sector</button>
+        </form>
+    </div>
+
+    <div class="container mt-4">
+        <h2>Sectores Creados</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre Sector</th>
+                    <th>Descripcion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Itera a través de los anuncios y muestra cada uno en una fila de la tabla -->
+                {% for sector in sector %}
+                    <tr>
+                        <td>{{ sector.nombre }}</td>
+                        <td>{{ sector.descripcion }}</td>
+                        <td>
+                            <a href="{% url 'task:delete_sector' idsector=sector.idSector %}">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Agrega la referencia a Bootstrap JS y jQuery (necesario para el funcionamiento de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
