@@ -62,7 +62,7 @@ def vista_restringida_Administrador(request):
 
 def login_view(request):
     if request.method == 'POST':
-        dpi = request.POST['email']
+        dpi = request.POST['dpi']
         password = request.POST['password']
         user = authenticate(request, dpi=dpi, password=password)
         if user is not None:
@@ -739,6 +739,7 @@ def search_multas_pagos(request):
      if request.method == 'POST':
         search = request.POST['search']
         multas = Multas.objects.filter(Q(fecha_creacion__icontains=search) | Q(usuario__nombres_apellidos__icontains=search))
+        multas= multas.filter(pago_realizado=True)
         return render(request, 'Pagos/pagos_multas.html',{'multa':multas})
 
 @login_required(login_url='task:login')
@@ -747,6 +748,7 @@ def search_agua_pagos(request):
      if request.method == 'POST':
         search = request.POST['search']
         agua = PagoAgua.objects.filter(Q(mes__icontains=search) | Q(usuario__nombres_apellidos__icontains=search))
+        agua= agua.filter(pago_realizado=True)
         return render(request, 'Pagos/pagos_servicioAgua.html',{'pagos_agua':agua})
 
 @login_required(login_url='task:login')
